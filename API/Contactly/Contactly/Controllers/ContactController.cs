@@ -36,5 +36,18 @@ namespace Contactly.Controllers
             dbcontext.SaveChanges();
             return Ok(domainModelContact);
         }
+
+        [HttpDelete]
+        [Route("{id:guid}")]
+        public IActionResult DeleteContact(Guid id)
+        {
+            var contact = dbcontext.Contacts.Find(id);
+            if (contact is not null)
+            { 
+                dbcontext.Contacts.Remove(contact);
+                dbcontext.SaveChanges();
+            }
+            return Ok();
+        }
     }
 }

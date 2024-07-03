@@ -19,7 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ContactlyBDContext>(options =>
-options.UseInMemoryDatabase("ContactDB"));
+options.UseSqlServer(builder.Configuration.GetConnectionString("ContactCS")));
 
 var app = builder.Build();
 
@@ -31,6 +31,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.UseAuthorization();
 
